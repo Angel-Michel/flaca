@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -110,7 +110,7 @@
             background: linear-gradient(135deg, #8e24aa, #512da8);
         }
 
-        /* --- ANIMACIÓN DEL RAMO --- */
+        /* --- ANIMACIÓN DEL RAMO (Solución para los cuadritos) --- */
         #ramo-container {
             display: none;
             position: fixed;
@@ -123,6 +123,8 @@
             position: absolute;
             font-size: 3rem;
             opacity: 0;
+            /* Esta línea fuerza al celular a mostrar los emojis correctamente */
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
             animation: bloom 2.5s ease-out forwards;
         }
 
@@ -149,7 +151,7 @@
 
         .cuerpo-carta {
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             line-height: 1.9;
             color: #f0f0f0;
             text-align: justify;
@@ -157,7 +159,7 @@
         }
 
         .resaltado {
-            color: #00e676; /* Verde menta intenso */
+            color: #00e676; 
             font-weight: bold;
             font-style: italic;
             text-shadow: 0 0 5px rgba(0, 230, 118, 0.3);
@@ -180,7 +182,7 @@
             letter-spacing: 2px;
         }
 
-        /* --- BOTÓN DE REGRESAR (MEJORADO) --- */
+        /* --- BOTÓN DE REGRESAR --- */
         .btn-regresar-container {
             display: flex;
             justify-content: center;
@@ -211,20 +213,16 @@
         @media (max-width: 600px) {
             .glass-card { padding: 40px 25px; width: 90%; }
             .saludo { font-size: 3rem; }
-            .cuerpo-carta { font-size: 1.1rem; }
+            .cuerpo-carta { font-size: 1.05rem; }
             .titulo-fecha { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- PARTÍCULAS SUTILES DE FONDO -->
     <div id="bg-particles"></div>
-
-    <!-- CONTENEDOR DEL RAMO ANIMADO -->
     <div id="ramo-container"></div>
 
-    <!-- TARJETA PRINCIPAL -->
     <div class="glass-card" id="main-card">
         
         <!-- FASE 1: INICIO -->
@@ -239,8 +237,8 @@
             <h2 class="saludo">Mi querida Marely,</h2>
             <div class="cuerpo-carta">
                 Hoy es un día para regalar flores moradas, pero no podía darte algo común. Te mereces algo único, como esa mezcla perfecta de <span class="texto-bold">chocolate y menta</span> que tanto te gusta.<br><br>
-                Quiero ser muy sincero contigo. <span class="texto-bold">Te pienso esperar y quiero conocerte más</span>. No me importa que pasen días, meses o años; <span class="resaltado">quiero conocer cada una de tus facetas</span>, descubrir todo lo que te hace ser tú, y estar ahí en cada una de ellas.<br><br>
-                Sé lo muchísimo que vales, y estoy dispuesto a demostrártelo todos los días. Porque alguien como tú, vale absolutamente toda la espera del mundo.
+                Quiero ser muy sincero contigo. <span class="texto-bold">Estoy dispuesto a esperarte</span>, incluso si eso significa aguardar días por un solo mensaje tuyo. Me interesa conocer a fondo tu forma de amar y de querer. Sé que a veces puedes ser un poco fría al escribir, pero eso no me asusta; al contrario, <span class="resaltado">estoy dispuesto a hacer todo lo necesario para ganarme tu cariño</span> y demostrarte tanta calidez que ese hielo se derrita a su propio ritmo.<br><br>
+                Sé lo muchísimo que vales, y te lo voy a demostrar todos los días. Porque alguien como tú, vale absolutamente toda la espera del mundo.
             </div>
             <span class="firma">Con cariño, Ángel</span>
             <div class="btn-regresar-container">
@@ -251,7 +249,6 @@
     </div>
 
     <script>
-        // Crear partículas sutiles de fondo
         function createBgParticles() {
             const container = document.getElementById('bg-particles');
             const count = 20;
@@ -275,20 +272,16 @@
             const ramoContainer = document.getElementById('ramo-container');
             const card = document.getElementById('main-card');
 
-            // Ocultar inicio
             inicio.style.opacity = '0';
             
             setTimeout(() => {
                 inicio.style.display = 'none';
                 
-                // Mostrar ramo
                 ramoContainer.style.display = 'block';
                 crearRamoAnimado();
 
-                // Hacer un pequeño efecto en la tarjeta
                 card.style.transform = 'scale(0.95)';
                 
-                // Después de la animación del ramo, mostrar la carta
                 setTimeout(() => {
                     card.style.transform = 'scale(1)';
                     carta.style.display = 'block';
@@ -296,21 +289,20 @@
                         carta.style.opacity = '1';
                     }, 50);
                     
-                    // Limpiar el ramo
                     setTimeout(() => {
                         ramoContainer.style.display = 'none';
                         ramoContainer.innerHTML = '';
                     }, 1000);
 
-                }, 2000); // Tiempo que dura el ramo visible
+                }, 2000); 
 
             }, 500);
         }
 
         function crearRamoAnimado() {
             const container = document.getElementById('ramo-container');
-            // Cambié los emojis por unos que los celulares muestran sin problema (Corazones morados, tulipanes, hojas y chocolate)
-            const flores = ['💜', '🌷', '🌿', '🍫', '✨'];
+            // Usando los emojis más universales y seguros para evitar cuadritos blancos
+            const flores = ['💜', '🌸', '🌿', '🍫'];
             const numFlores = 40;
 
             for (let i = 0; i < numFlores; i++) {
