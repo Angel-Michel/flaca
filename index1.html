@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Marely... 💜🌿</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* --- FONDO ANIMADO --- */
+        /* --- FONDO ANIMADO Y ELEGANTE --- */
         body {
             margin: 0;
             padding: 0;
@@ -16,9 +16,9 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background: linear-gradient(-45deg, #1a0b2e, #2d1b4e, #0f241d, #1e0d29);
+            background: linear-gradient(-45deg, #130a1f, #2a1b3d, #0f1c18, #1c0d23);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: gradientBG 20s ease infinite;
             color: #ffffff;
         }
 
@@ -28,208 +28,313 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- PARTÍCULAS (FLORES Y CHOCOLATE DE MENTA) --- */
-        .particle {
+        /* --- PARTÍCULAS SUTILES DE FONDO --- */
+        .particle-bg {
             position: absolute;
-            top: -10vh;
-            z-index: 1;
-            user-select: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
             pointer-events: none;
-            animation: fall linear infinite;
+            z-index: 1;
+            animation: float-bg linear infinite;
         }
 
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg) scale(1.2); opacity: 0; }
+        @keyframes float-bg {
+            0% { transform: translateY(110vh) scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        /* --- TARJETA DE CRISTAL (GLASSMORPHISM) --- */
+        /* --- TARJETA DE CRISTAL REFINADA --- */
         .glass-card {
             position: relative;
             z-index: 10;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 40px 30px;
-            width: 85%;
-            max-width: 450px;
+            background: rgba(25, 25, 30, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 45px 35px;
+            width: 88%;
+            max-width: 480px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.05);
-            transform: translateY(20px);
-            opacity: 0;
-            animation: floatUp 1.5s ease-out forwards;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(255, 255, 255, 0.03);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @keyframes floatUp {
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* --- CONTENIDO INICIAL (EL RAMO CERRADO) --- */
+        /* --- PANTALLA INICIAL --- */
         #pantalla-inicio {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 0.5s ease;
         }
 
         .titulo-fecha {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: #d1b3ff;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            font-size: 2.2rem;
+            color: #e0c8ff;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(224, 200, 255, 0.3);
         }
 
         .texto-misterio {
             font-weight: 300;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: #e0e0e0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 35px;
+            color: #dcdcdc;
         }
 
         .btn-abrir {
-            background: linear-gradient(135deg, #673ab7, #311b92);
+            background: linear-gradient(135deg, #7b1fa2, #4a148c);
             color: white;
             border: none;
-            padding: 15px 40px;
+            padding: 16px 45px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(103, 58, 183, 0.4);
+            box-shadow: 0 10px 25px rgba(74, 20, 140, 0.5);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            letter-spacing: 1px;
         }
 
         .btn-abrir:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 15px 25px rgba(103, 58, 183, 0.6);
-            background: linear-gradient(135deg, #7e57c2, #4527a0);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(123, 31, 162, 0.6);
+            background: linear-gradient(135deg, #8e24aa, #512da8);
         }
 
-        /* --- LA CARTA ABIERTA --- */
+        /* --- ANIMACIÓN DEL RAMO --- */
+        #ramo-container {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .ramo-flower {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0;
+            animation: bloom 2.5s ease-out forwards;
+        }
+
+        @keyframes bloom {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 0; }
+        }
+
+        /* --- LA CARTA --- */
         #pantalla-carta {
             display: none;
-            animation: fadeIn 1s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            opacity: 0;
+            transition: opacity 0.8s ease;
         }
 
         .saludo {
             font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
-            color: #b388ff;
-            margin: 0 0 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 3.2rem;
+            color: #d1b3ff;
+            margin: 0 0 25px 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
         }
 
         .cuerpo-carta {
             font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #f5f5f5;
+            font-size: 1.15rem;
+            line-height: 1.85;
+            color: #f0f0f0;
             text-align: justify;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .resaltado {
-            color: #00e676; /* Tono verde menta */
+            color: #00e676; /* Verde menta intenso */
             font-weight: bold;
             font-style: italic;
+            text-shadow: 0 0 5px rgba(0, 230, 118, 0.3);
+        }
+        
+        .texto-bold {
+            font-weight: 700;
+            color: #ffffff;
         }
 
         .firma {
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
-            font-size: 1.2rem;
-            color: #b388ff;
+            font-size: 1.25rem;
+            color: #d1b3ff;
             text-align: right;
             display: block;
-            margin-top: 20px;
+            margin-top: 25px;
             letter-spacing: 2px;
         }
 
+        /* --- BOTÓN DE REGRESAR --- */
+        .btn-regresar {
+            background: transparent;
+            color: #a0a0a0;
+            border: 1px solid #a0a0a0;
+            padding: 10px 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .btn-regresar:hover {
+            color: #ffffff;
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         @media (max-width: 600px) {
-            .glass-card { padding: 30px 20px; }
-            .saludo { font-size: 2.4rem; }
+            .glass-card { padding: 35px 25px; width: 90%; }
+            .saludo { font-size: 2.8rem; }
             .cuerpo-carta { font-size: 1.05rem; }
+            .titulo-fecha { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- CONTENEDOR DE PARTÍCULAS -->
-    <div id="particles-container"></div>
+    <!-- PARTÍCULAS SUTILES DE FONDO -->
+    <div id="bg-particles"></div>
+
+    <!-- CONTENEDOR DEL RAMO ANIMADO -->
+    <div id="ramo-container"></div>
 
     <!-- TARJETA PRINCIPAL -->
-    <div class="glass-card">
+    <div class="glass-card" id="main-card">
         
-        <!-- FASE 1: INICIO MISTERIOSO -->
+        <!-- FASE 1: INICIO -->
         <div id="pantalla-inicio">
             <h1 class="titulo-fecha">9 de Noviembre</h1>
             <p class="texto-misterio">Dicen que hoy se regalan flores moradas para demostrar orgullo, admiración y un cariño profundo. <br><br>Pero yo quería agregarle algo más... tu toque favorito. 🍫🌿</p>
-            <button class="btn-abrir" onclick="abrirCarta()">Descubre tu sorpresa</button>
+            <button class="btn-abrir" onclick="iniciarSorpresa()">Descubre tu sorpresa</button>
         </div>
 
-        <!-- FASE 2: LA CARTA DE ÁNGEL -->
+        <!-- FASE 2: LA CARTA -->
         <div id="pantalla-carta">
             <h2 class="saludo">Mi querida Marely,</h2>
             <div class="cuerpo-carta">
-                Hoy es un día para regalar flores moradas, pero no podía darte algo común. Te mereces algo único, como esa mezcla perfecta de <b>chocolate y menta</b> que tanto te gusta.<br><br>
-                Quiero ser muy sincero contigo. <b>Te pienso esperar y quiero conocerte más</b>. No me importa que pasen días, meses o años; <span class="resaltado">quiero conocer cada una de tus facetas</span>, descubrir todo lo que te hace ser tú, y estar ahí en cada una de ellas.<br><br>
+                Hoy es un día para regalar flores moradas, pero no podía darte algo común. Te mereces algo único, como esa mezcla perfecta de <span class="texto-bold">chocolate y menta</span> que tanto te gusta.<br><br>
+                Quiero ser muy sincero contigo. <span class="texto-bold">Te pienso esperar y quiero conocerte más</span>. No me importa que pasen días, meses o años; <span class="resaltado">quiero conocer cada una de tus facetas</span>, descubrir todo lo que te hace ser tú, y estar ahí en cada una de ellas.<br><br>
                 Sé lo muchísimo que vales, y estoy dispuesto a demostrártelo todos los días. Porque alguien como tú, vale absolutamente toda la espera del mundo.
             </div>
             <span class="firma">Con cariño, Ángel</span>
+            <button class="btn-regresar" onclick="regresarInicio()">← Volver al inicio</button>
         </div>
 
     </div>
 
     <script>
-        // Sistema de partículas: Lluvia de Flores Moradas y Chocolate de Menta
-        function createParticles() {
-            const container = document.getElementById('particles-container');
-            // Emojis: Corazón morado, flor morada, chocolate, hojita de menta
-            const items = ['💜', '🪻', '🍫', '🌿', '✨']; 
-            const particleCount = 35; // Cantidad de elementos cayendo
+        // Crear partículas sutiles de fondo
+        function createBgParticles() {
+            const container = document.getElementById('bg-particles');
+            const count = 20;
+            for (let i = 0; i < count; i++) {
+                let p = document.createElement('div');
+                p.className = 'particle-bg';
+                let size = Math.random() * 5 + 2 + 'px';
+                p.style.width = size;
+                p.style.height = size;
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = Math.random() * 10 + 10 + 's';
+                p.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(p);
+            }
+        }
+        createBgParticles();
 
-            for (let i = 0; i < particleCount; i++) {
-                let particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Asignar un emoji aleatorio
-                particle.innerText = items[Math.floor(Math.random() * items.length)];
-                
-                // Posición inicial aleatoria (0% a 100% del ancho)
-                particle.style.left = Math.random() * 100 + 'vw';
-                
-                // Tamaño aleatorio
-                particle.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
-                
-                // Duración de caída y retraso aleatorios para que no caigan todos al mismo tiempo
-                particle.style.animationDuration = (Math.random() * 8 + 5) + 's';
-                particle.style.animationDelay = (Math.random() * 5) + 's';
-                
-                // Rotación inicial
-                particle.style.transform = `rotate(${Math.random() * 360}deg)`;
+        function iniciarSorpresa() {
+            const inicio = document.getElementById('pantalla-inicio');
+            const carta = document.getElementById('pantalla-carta');
+            const ramoContainer = document.getElementById('ramo-container');
+            const card = document.getElementById('main-card');
 
-                container.appendChild(particle);
+            // Ocultar inicio
+            inicio.style.opacity = '0';
+            
+            setTimeout(() => {
+                inicio.style.display = 'none';
+                
+                // Mostrar ramo
+                ramoContainer.style.display = 'block';
+                crearRamoAnimado();
+
+                // Hacer un pequeño efecto en la tarjeta
+                card.style.transform = 'scale(0.95)';
+                
+                // Después de la animación del ramo, mostrar la carta
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                    carta.style.display = 'block';
+                    // Pequeño delay para que aplique la transición de opacidad
+                    setTimeout(() => {
+                        carta.style.opacity = '1';
+                    }, 50);
+                    
+                    // Limpiar el ramo
+                    setTimeout(() => {
+                        ramoContainer.style.display = 'none';
+                        ramoContainer.innerHTML = '';
+                    }, 1000);
+
+                }, 2000); // Tiempo que dura el ramo visible
+
+            }, 500);
+        }
+
+        function crearRamoAnimado() {
+            const container = document.getElementById('ramo-container');
+            const flores = ['🪻', '💜', '🌷', '🌿', '🍫'];
+            const numFlores = 40;
+
+            for (let i = 0; i < numFlores; i++) {
+                let f = document.createElement('div');
+                f.className = 'ramo-flower';
+                f.innerText = flores[Math.floor(Math.random() * flores.length)];
+                
+                // Posicionar aleatoriamente en la pantalla
+                f.style.left = Math.random() * 90 + 5 + 'vw';
+                f.style.top = Math.random() * 90 + 5 + 'vh';
+                
+                // Variar el tamaño y el retraso
+                f.style.fontSize = (Math.random() * 2 + 2) + 'rem';
+                f.style.animationDelay = (Math.random() * 0.5) + 's';
+                
+                container.appendChild(f);
             }
         }
 
-        // Ejecutar las partículas al cargar la página
-        window.onload = createParticles;
+        function regresarInicio() {
+            const inicio = document.getElementById('pantalla-inicio');
+            const carta = document.getElementById('pantalla-carta');
 
-        // Función para cambiar de pantalla con transición
-        function abrirCarta() {
-            document.getElementById('pantalla-inicio').style.display = 'none';
-            document.getElementById('pantalla-carta').style.display = 'block';
+            carta.style.opacity = '0';
+            
+            setTimeout(() => {
+                carta.style.display = 'none';
+                inicio.style.display = 'flex';
+                setTimeout(() => {
+                    inicio.style.opacity = '1';
+                }, 50);
+            }, 500);
         }
     </script>
 </body>
