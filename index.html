@@ -48,16 +48,19 @@
         .glass-card {
             position: relative;
             z-index: 10;
-            background: rgba(25, 25, 30, 0.7);
+            background: rgba(25, 25, 30, 0.75);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 24px;
-            padding: 50px 40px;
+            padding: 35px 30px;
             width: 88%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255, 255, 255, 0.05);
+            max-width: 480px;
+            max-height: 85vh; /* Evita que rebase la pantalla */
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255, 255, 255, 0.04);
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -66,24 +69,37 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
             opacity: 1;
             transition: opacity 0.5s ease;
         }
 
+        .ramo-header {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: pulse-ramo 2s infinite ease-in-out;
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+        }
+
+        @keyframes pulse-ramo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
         .titulo-fecha {
             font-family: 'Playfair Display', serif;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             color: #e0c8ff;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             letter-spacing: 2px;
             text-shadow: 0 2px 10px rgba(224, 200, 255, 0.3);
         }
 
         .texto-misterio {
             font-weight: 300;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 40px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
             color: #eaeaea;
         }
 
@@ -91,26 +107,24 @@
             background: linear-gradient(135deg, #7b1fa2, #4a148c);
             color: white;
             border: none;
-            padding: 16px 45px;
+            padding: 15px 40px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 10px 25px rgba(74, 20, 140, 0.5);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
             letter-spacing: 1px;
         }
 
         .btn-abrir:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(123, 31, 162, 0.6);
             background: linear-gradient(135deg, #8e24aa, #512da8);
         }
 
-        /* --- ANIMACIÓN DEL RAMO (Solución para los cuadritos) --- */
+        /* --- ANIMACIÓN DE APERTURA (RAMO) --- */
         #ramo-container {
             display: none;
             position: fixed;
@@ -123,7 +137,6 @@
             position: absolute;
             font-size: 3rem;
             opacity: 0;
-            /* Esta línea fuerza al celular a mostrar los emojis correctamente */
             font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
             animation: bloom 2.5s ease-out forwards;
         }
@@ -134,28 +147,49 @@
             100% { transform: scale(1) rotate(0deg); opacity: 0; }
         }
 
-        /* --- LA CARTA --- */
+        /* --- LA CARTA CON SCROLL INTERNO --- */
         #pantalla-carta {
             display: none;
             opacity: 0;
+            flex-direction: column;
+            height: 100%;
             transition: opacity 0.8s ease;
+        }
+
+        .carta-scroll-area {
+            overflow-y: auto;
+            max-height: 65vh;
+            padding-right: 8px;
+            text-align: justify;
+            /* Personalización de la barra de desplazamiento */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(209, 179, 255, 0.4) transparent;
+        }
+
+        .carta-scroll-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .carta-scroll-area::-webkit-scrollbar-thumb {
+            background-color: rgba(209, 179, 255, 0.4);
+            border-radius: 10px;
         }
 
         .saludo {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
+            font-size: 3rem;
             color: #d1b3ff;
-            margin: 0 0 30px 0;
+            margin: 0 0 20px 0;
+            text-align: center;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
         }
 
         .cuerpo-carta {
             font-family: 'Playfair Display', serif;
-            font-size: 1.15rem;
-            line-height: 1.9;
+            font-size: 1.1rem;
+            line-height: 1.8;
             color: #f0f0f0;
-            text-align: justify;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
         }
 
         .resaltado {
@@ -173,12 +207,12 @@
         .firma {
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #d1b3ff;
             text-align: right;
             display: block;
-            margin-top: 30px;
-            margin-bottom: 35px;
+            margin-top: 20px;
+            margin-bottom: 25px;
             letter-spacing: 2px;
         }
 
@@ -186,16 +220,19 @@
         .btn-regresar-container {
             display: flex;
             justify-content: center;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .btn-regresar {
             background: rgba(255, 255, 255, 0.05);
             color: #e0e0e0;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 12px 30px;
+            padding: 10px 25px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -207,14 +244,14 @@
             background: rgba(255, 255, 255, 0.15);
             color: #ffffff;
             border-color: #ffffff;
-            transform: translateY(-2px);
         }
 
         @media (max-width: 600px) {
-            .glass-card { padding: 40px 25px; width: 90%; }
-            .saludo { font-size: 3rem; }
-            .cuerpo-carta { font-size: 1.05rem; }
-            .titulo-fecha { font-size: 2.2rem; }
+            .glass-card { padding: 25px 20px; width: 92%; max-height: 88vh; }
+            .saludo { font-size: 2.5rem; }
+            .cuerpo-carta { font-size: 1rem; }
+            .titulo-fecha { font-size: 1.9rem; }
+            .ramo-header { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -227,6 +264,7 @@
         
         <!-- FASE 1: INICIO -->
         <div id="pantalla-inicio">
+            <div class="ramo-header">💐💜🌿</div>
             <h1 class="titulo-fecha">9 de Noviembre</h1>
             <p class="texto-misterio">Dicen que hoy se regalan flores moradas para demostrar orgullo, admiración y un cariño profundo. <br><br>Pero yo quería agregarle algo más... tu toque favorito. 🍫🌿</p>
             <button class="btn-abrir" onclick="iniciarSorpresa()">Descubre tu sorpresa</button>
@@ -234,13 +272,15 @@
 
         <!-- FASE 2: LA CARTA -->
         <div id="pantalla-carta">
-            <h2 class="saludo">Mi querida Marely,</h2>
-            <div class="cuerpo-carta">
-                Hoy es un día para regalar flores moradas, pero no podía darte algo común. Te mereces algo único, como esa mezcla perfecta de <span class="texto-bold">chocolate y menta</span> que tanto te gusta.<br><br>
-                Quiero ser muy sincero contigo. <span class="texto-bold">Estoy dispuesto a esperarte</span>, incluso si eso significa aguardar días por un solo mensaje tuyo. Me interesa conocer a fondo tu forma de amar y de querer. Sé que a veces puedes ser un poco fría al escribir, pero eso no me asusta; al contrario, <span class="resaltado">estoy dispuesto a hacer todo lo necesario para ganarme tu cariño</span> y demostrarte tanta calidez que ese hielo se derrita a su propio ritmo.<br><br>
-                Sé lo muchísimo que vales, y te lo voy a demostrar todos los días. Porque alguien como tú, vale absolutamente toda la espera del mundo.
+            <div class="carta-scroll-area">
+                <h2 class="saludo">Mi querida Marely,</h2>
+                <div class="cuerpo-carta">
+                    Hoy es un día para regalar flores moradas, pero no podía darte algo común. Te mereces algo único, como esa mezcla perfecta de <span class="texto-bold">chocolate y menta</span> que tanto te gusta.<br><br>
+                    Quiero ser muy sincero contigo. <span class="texto-bold">Estoy dispuesto a esperarte</span>, incluso si eso significa aguardar días por un solo mensaje tuyo. Me interesa conocer a fondo tu forma de amar y de querer. Sé que a veces puedes ser un poco fría al escribir, pero eso no me asusta; al contrario, <span class="resaltado">estoy dispuesto a hacer todo lo necesario para ganarme tu cariño</span> y demostrarte tanta calidez que ese hielo se derrita a su propio ritmo.<br><br>
+                    Sé lo muchísimo que vales, y te lo voy a demostrar todos los días. Porque alguien como tú, vale absolutamente toda la espera del mundo.
+                </div>
+                <span class="firma">Con cariño, Ángel</span>
             </div>
-            <span class="firma">Con cariño, Ángel</span>
             <div class="btn-regresar-container">
                 <button class="btn-regresar" onclick="regresarInicio()">← Volver al inicio</button>
             </div>
@@ -284,7 +324,7 @@
                 
                 setTimeout(() => {
                     card.style.transform = 'scale(1)';
-                    carta.style.display = 'block';
+                    carta.style.display = 'flex';
                     setTimeout(() => {
                         carta.style.opacity = '1';
                     }, 50);
@@ -301,7 +341,6 @@
 
         function crearRamoAnimado() {
             const container = document.getElementById('ramo-container');
-            // Usando los emojis más universales y seguros para evitar cuadritos blancos
             const flores = ['💜', '🌸', '🌿', '🍫'];
             const numFlores = 40;
 
@@ -336,4 +375,4 @@
         }
     </script>
 </body>
-</html>
+</html> 
