@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Marely... 💜🌿</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- FONDO ANIMADO --- */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #1a0b2e, #2d1b4e, #0f241d, #1e0d29);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #ffffff;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- PARTÍCULAS (FLORES Y CHOCOLATE DE MENTA) --- */
+        .particle {
+            position: absolute;
+            top: -10vh;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* --- TARJETA DE CRISTAL (GLASSMORPHISM) --- */
+        .glass-card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 85%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* --- CONTENIDO INICIAL (EL RAMO CERRADO) --- */
+        #pantalla-inicio {
+            display: block;
+        }
+
+        .titulo-fecha {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #d1b3ff;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .texto-misterio {
+            font-weight: 300;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+        }
+
+        .btn-abrir {
+            background: linear-gradient(135deg, #673ab7, #311b92);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(103, 58, 183, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-abrir:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 15px 25px rgba(103, 58, 183, 0.6);
+            background: linear-gradient(135deg, #7e57c2, #4527a0);
+        }
+
+        /* --- LA CARTA ABIERTA --- */
+        #pantalla-carta {
+            display: none;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .saludo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #b388ff;
+            margin: 0 0 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .cuerpo-carta {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #f5f5f5;
+            text-align: justify;
+            margin-bottom: 25px;
+        }
+
+        .resaltado {
+            color: #00e676; /* Tono verde menta */
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .firma {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #b388ff;
+            text-align: right;
+            display: block;
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 600px) {
+            .glass-card { padding: 30px 20px; }
+            .saludo { font-size: 2.4rem; }
+            .cuerpo-carta { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CONTENEDOR DE PARTÍCULAS -->
+    <div id="particles-container"></div>
+
+    <!-- TARJETA PRINCIPAL -->
+    <div class="glass-card">
+        
+        <!-- FASE 1: INICIO MISTERIOSO -->
+        <div id="pantalla-inicio">
+            <h1 class="titulo-fecha">9 de Noviembre</h1>
+            <p class="texto-misterio">Dicen que hoy se regalan flores moradas para demostrar orgullo, admiración y un cariño profundo. <br><br>Pero yo quería agregarle algo más... tu toque favorito. 🍫🌿</p>
+            <button class="btn-abrir" onclick="abrirCarta()">Descubre tu sorpresa</button>
+        </div>
+
+        <!-- FASE 2: LA CARTA DE ÁNGEL -->
+        <div id="pantalla-carta">
+            <h2 class="saludo">Mi querida Marely,</h2>
+            <div class="cuerpo-carta">
+                Hoy es un día para regalar flores moradas, pero no podía darte algo común. Te mereces algo único, como esa mezcla perfecta de <b>chocolate y menta</b> que tanto te gusta.<br><br>
+                Quiero ser muy sincero contigo. <b>Te pienso esperar y quiero conocerte más</b>. No me importa que pasen días, meses o años; <span class="resaltado">quiero conocer cada una de tus facetas</span>, descubrir todo lo que te hace ser tú, y estar ahí en cada una de ellas.<br><br>
+                Sé lo muchísimo que vales, y estoy dispuesto a demostrártelo todos los días. Porque alguien como tú, vale absolutamente toda la espera del mundo.
+            </div>
+            <span class="firma">Con cariño, Ángel</span>
+        </div>
+
+    </div>
+
+    <script>
+        // Sistema de partículas: Lluvia de Flores Moradas y Chocolate de Menta
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            // Emojis: Corazón morado, flor morada, chocolate, hojita de menta
+            const items = ['💜', '🪻', '🍫', '🌿', '✨']; 
+            const particleCount = 35; // Cantidad de elementos cayendo
+
+            for (let i = 0; i < particleCount; i++) {
+                let particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Asignar un emoji aleatorio
+                particle.innerText = items[Math.floor(Math.random() * items.length)];
+                
+                // Posición inicial aleatoria (0% a 100% del ancho)
+                particle.style.left = Math.random() * 100 + 'vw';
+                
+                // Tamaño aleatorio
+                particle.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+                
+                // Duración de caída y retraso aleatorios para que no caigan todos al mismo tiempo
+                particle.style.animationDuration = (Math.random() * 8 + 5) + 's';
+                particle.style.animationDelay = (Math.random() * 5) + 's';
+                
+                // Rotación inicial
+                particle.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Ejecutar las partículas al cargar la página
+        window.onload = createParticles;
+
+        // Función para cambiar de pantalla con transición
+        function abrirCarta() {
+            document.getElementById('pantalla-inicio').style.display = 'none';
+            document.getElementById('pantalla-carta').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
