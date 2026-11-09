@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -48,16 +48,16 @@
         .glass-card {
             position: relative;
             z-index: 10;
-            background: rgba(25, 25, 30, 0.6);
+            background: rgba(25, 25, 30, 0.7);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            padding: 45px 35px;
+            padding: 50px 40px;
             width: 88%;
-            max-width: 480px;
+            max-width: 500px;
             text-align: center;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(255, 255, 255, 0.03);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255, 255, 255, 0.05);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -72,19 +72,19 @@
 
         .titulo-fecha {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             color: #e0c8ff;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             letter-spacing: 2px;
             text-shadow: 0 2px 10px rgba(224, 200, 255, 0.3);
         }
 
         .texto-misterio {
             font-weight: 300;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: 35px;
-            color: #dcdcdc;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            color: #eaeaea;
         }
 
         .btn-abrir {
@@ -141,19 +141,19 @@
 
         .saludo {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.2rem;
+            font-size: 3.5rem;
             color: #d1b3ff;
-            margin: 0 0 25px 0;
+            margin: 0 0 30px 0;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
         }
 
         .cuerpo-carta {
             font-family: 'Playfair Display', serif;
-            font-size: 1.15rem;
-            line-height: 1.85;
+            font-size: 1.2rem;
+            line-height: 1.9;
             color: #f0f0f0;
             text-align: justify;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .resaltado {
@@ -171,42 +171,48 @@
         .firma {
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             color: #d1b3ff;
             text-align: right;
             display: block;
-            margin-top: 25px;
+            margin-top: 30px;
+            margin-bottom: 35px;
             letter-spacing: 2px;
         }
 
-        /* --- BOTÓN DE REGRESAR --- */
+        /* --- BOTÓN DE REGRESAR (MEJORADO) --- */
+        .btn-regresar-container {
+            display: flex;
+            justify-content: center;
+        }
+
         .btn-regresar {
-            background: transparent;
-            color: #a0a0a0;
-            border: 1px solid #a0a0a0;
-            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 30px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 500;
-            font-size: 0.9rem;
-            border-radius: 30px;
+            font-size: 0.95rem;
+            border-radius: 50px;
             cursor: pointer;
-            margin-top: 30px;
             transition: all 0.3s ease;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
         .btn-regresar:hover {
+            background: rgba(255, 255, 255, 0.15);
             color: #ffffff;
             border-color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 600px) {
-            .glass-card { padding: 35px 25px; width: 90%; }
-            .saludo { font-size: 2.8rem; }
-            .cuerpo-carta { font-size: 1.05rem; }
-            .titulo-fecha { font-size: 2rem; }
+            .glass-card { padding: 40px 25px; width: 90%; }
+            .saludo { font-size: 3rem; }
+            .cuerpo-carta { font-size: 1.1rem; }
+            .titulo-fecha { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -237,7 +243,9 @@
                 Sé lo muchísimo que vales, y estoy dispuesto a demostrártelo todos los días. Porque alguien como tú, vale absolutamente toda la espera del mundo.
             </div>
             <span class="firma">Con cariño, Ángel</span>
-            <button class="btn-regresar" onclick="regresarInicio()">← Volver al inicio</button>
+            <div class="btn-regresar-container">
+                <button class="btn-regresar" onclick="regresarInicio()">← Volver al inicio</button>
+            </div>
         </div>
 
     </div>
@@ -284,7 +292,6 @@
                 setTimeout(() => {
                     card.style.transform = 'scale(1)';
                     carta.style.display = 'block';
-                    // Pequeño delay para que aplique la transición de opacidad
                     setTimeout(() => {
                         carta.style.opacity = '1';
                     }, 50);
@@ -302,7 +309,8 @@
 
         function crearRamoAnimado() {
             const container = document.getElementById('ramo-container');
-            const flores = ['🪻', '💜', '🌷', '🌿', '🍫'];
+            // Cambié los emojis por unos que los celulares muestran sin problema (Corazones morados, tulipanes, hojas y chocolate)
+            const flores = ['💜', '🌷', '🌿', '🍫', '✨'];
             const numFlores = 40;
 
             for (let i = 0; i < numFlores; i++) {
@@ -310,11 +318,9 @@
                 f.className = 'ramo-flower';
                 f.innerText = flores[Math.floor(Math.random() * flores.length)];
                 
-                // Posicionar aleatoriamente en la pantalla
                 f.style.left = Math.random() * 90 + 5 + 'vw';
                 f.style.top = Math.random() * 90 + 5 + 'vh';
                 
-                // Variar el tamaño y el retraso
                 f.style.fontSize = (Math.random() * 2 + 2) + 'rem';
                 f.style.animationDelay = (Math.random() * 0.5) + 's';
                 
