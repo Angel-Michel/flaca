@@ -28,36 +28,38 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- PARTÍCULAS SUTILES DE FONDO --- */
-        .particle-bg {
+        /* --- LLUVIA CONSTANTE DE FLORES Y CHOCOLATE EN EL FONDO --- */
+        .falling-flower {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            pointer-events: none;
+            top: -50px;
             z-index: 1;
-            animation: float-bg linear infinite;
+            user-select: none;
+            pointer-events: none;
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+            animation: fall-down linear infinite;
         }
 
-        @keyframes float-bg {
-            0% { transform: translateY(110vh) scale(0); opacity: 0; }
-            50% { opacity: 0.5; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        @keyframes fall-down {
+            0% { transform: translateY(-50px) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
 
         /* --- TARJETA DE CRISTAL REFINADA --- */
         .glass-card {
             position: relative;
             z-index: 10;
-            background: rgba(25, 25, 30, 0.75);
+            background: rgba(25, 25, 30, 0.78);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 24px;
             padding: 35px 30px;
             width: 88%;
             max-width: 480px;
-            max-height: 85vh; /* Evita que rebase la pantalla */
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255, 255, 255, 0.04);
+            max-height: 85vh;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 0 25px rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
@@ -75,7 +77,7 @@
         }
 
         .ramo-header {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             margin-bottom: 10px;
             animation: pulse-ramo 2s infinite ease-in-out;
             font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
@@ -83,7 +85,7 @@
 
         @keyframes pulse-ramo {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+            50% { transform: scale(1.1); }
         }
 
         .titulo-fecha {
@@ -92,7 +94,7 @@
             color: #e0c8ff;
             margin-bottom: 15px;
             letter-spacing: 2px;
-            text-shadow: 0 2px 10px rgba(224, 200, 255, 0.3);
+            text-shadow: 0 2px 10px rgba(224, 200, 255, 0.4);
         }
 
         .texto-misterio {
@@ -113,38 +115,15 @@
             font-size: 1.1rem;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(74, 20, 140, 0.5);
+            box-shadow: 0 10px 25px rgba(74, 20, 140, 0.6);
             transition: all 0.3s ease;
             letter-spacing: 1px;
         }
 
         .btn-abrir:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(123, 31, 162, 0.6);
+            box-shadow: 0 15px 30px rgba(123, 31, 162, 0.8);
             background: linear-gradient(135deg, #8e24aa, #512da8);
-        }
-
-        /* --- ANIMACIÓN DE APERTURA (RAMO) --- */
-        #ramo-container {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        .ramo-flower {
-            position: absolute;
-            font-size: 3rem;
-            opacity: 0;
-            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
-            animation: bloom 2.5s ease-out forwards;
-        }
-
-        @keyframes bloom {
-            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
-            50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
-            100% { transform: scale(1) rotate(0deg); opacity: 0; }
         }
 
         /* --- LA CARTA CON SCROLL INTERNO --- */
@@ -161,7 +140,6 @@
             max-height: 65vh;
             padding-right: 8px;
             text-align: justify;
-            /* Personalización de la barra de desplazamiento */
             scrollbar-width: thin;
             scrollbar-color: rgba(209, 179, 255, 0.4) transparent;
         }
@@ -257,8 +235,8 @@
 </head>
 <body>
 
+    <!-- CONTENEDOR DE LA LLUVIA DE FLORES EN EL FONDO -->
     <div id="bg-particles"></div>
-    <div id="ramo-container"></div>
 
     <div class="glass-card" id="main-card">
         
@@ -289,38 +267,37 @@
     </div>
 
     <script>
-        function createBgParticles() {
+        // Sistema de lluvia constante de flores moradas, corazones y chocolate en el fondo
+        function createFallingFlowers() {
             const container = document.getElementById('bg-particles');
-            const count = 20;
+            const items = ['💜', '🪻', '🌸', '🌿', '🍫', '✨'];
+            const count = 30; // Cantidad de elementos cayendo al mismo tiempo
+
             for (let i = 0; i < count; i++) {
                 let p = document.createElement('div');
-                p.className = 'particle-bg';
-                let size = Math.random() * 5 + 2 + 'px';
-                p.style.width = size;
-                p.style.height = size;
+                p.className = 'falling-flower';
+                p.innerText = items[Math.floor(Math.random() * items.length)];
+                
                 p.style.left = Math.random() * 100 + 'vw';
-                p.style.animationDuration = Math.random() * 10 + 10 + 's';
-                p.style.animationDelay = Math.random() * 5 + 's';
+                p.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                p.style.animationDuration = (Math.random() * 6 + 4) + 's'; // Velocidad de caída
+                p.style.animationDelay = (Math.random() * 5) + 's'; // Retraso inicial aleatorio
+                
                 container.appendChild(p);
             }
         }
-        createBgParticles();
+        createFallingFlowers();
 
         function iniciarSorpresa() {
             const inicio = document.getElementById('pantalla-inicio');
             const carta = document.getElementById('pantalla-carta');
-            const ramoContainer = document.getElementById('ramo-container');
             const card = document.getElementById('main-card');
 
             inicio.style.opacity = '0';
             
             setTimeout(() => {
                 inicio.style.display = 'none';
-                
-                ramoContainer.style.display = 'block';
-                crearRamoAnimado();
-
-                card.style.transform = 'scale(0.95)';
+                card.style.transform = 'scale(0.96)';
                 
                 setTimeout(() => {
                     card.style.transform = 'scale(1)';
@@ -328,35 +305,9 @@
                     setTimeout(() => {
                         carta.style.opacity = '1';
                     }, 50);
-                    
-                    setTimeout(() => {
-                        ramoContainer.style.display = 'none';
-                        ramoContainer.innerHTML = '';
-                    }, 1000);
+                }, 300);
 
-                }, 2000); 
-
-            }, 500);
-        }
-
-        function crearRamoAnimado() {
-            const container = document.getElementById('ramo-container');
-            const flores = ['💜', '🌸', '🌿', '🍫'];
-            const numFlores = 40;
-
-            for (let i = 0; i < numFlores; i++) {
-                let f = document.createElement('div');
-                f.className = 'ramo-flower';
-                f.innerText = flores[Math.floor(Math.random() * flores.length)];
-                
-                f.style.left = Math.random() * 90 + 5 + 'vw';
-                f.style.top = Math.random() * 90 + 5 + 'vh';
-                
-                f.style.fontSize = (Math.random() * 2 + 2) + 'rem';
-                f.style.animationDelay = (Math.random() * 0.5) + 's';
-                
-                container.appendChild(f);
-            }
+            }, 400);
         }
 
         function regresarInicio() {
