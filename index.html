@@ -2,24 +2,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Marely... 💜🌿</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* --- FONDO ANIMADO Y ELEGANTE --- */
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+        /* --- CONFIGURACIÓN BASE --- */
+        body, html {
+            margin: 0; padding: 0;
+            height: 100vh; width: 100vw;
             font-family: 'Montserrat', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
             background: linear-gradient(-45deg, #130a1f, #2a1b3d, #0f1c18, #1c0d23);
             background-size: 400% 400%;
             animation: gradientBG 20s ease infinite;
             color: #ffffff;
+            overflow: hidden;
+            touch-action: none; 
         }
 
         @keyframes gradientBG {
@@ -28,31 +25,122 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- LLUVIA CONSTANTE DE FLORES Y CHOCOLATE EN EL FONDO --- */
-        .falling-flower {
+        /* --- PANTALLA DEL JUEGO --- */
+        #game-screen {
             position: absolute;
-            top: -50px;
-            z-index: 1;
-            user-select: none;
-            pointer-events: none;
-            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
-            animation: fall-down linear infinite;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
         }
 
-        @keyframes fall-down {
-            0% { transform: translateY(-50px) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
-        }
-
-        /* --- TARJETA DE CRISTAL REFINADA --- */
-        .glass-card {
-            position: relative;
+        .game-instructions {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #d1b3ff;
+            text-align: center;
+            font-weight: 600;
             z-index: 10;
-            background: rgba(25, 25, 30, 0.78);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+        }
+
+        /* --- TABLERO DE PUNTUACIÓN (COLECCIÓN) --- */
+        .score-board {
+            margin-top: 10px;
+            background: rgba(25, 25, 30, 0.6);
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            width: 90%;
+            max-width: 400px;
+            z-index: 10;
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+        }
+        
+        .score-item span {
+            font-family: 'Montserrat', sans-serif;
+            color: #eaeaea;
+        }
+
+        .completed { color: #00e676 !important; text-shadow: 0 0 5px rgba(0, 230, 118, 0.5); }
+
+        /* --- JUGADOR Y OBJETOS --- */
+        #player {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3.5rem;
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+            transition: left 0.1s ease-out;
+            z-index: 20;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
+        }
+
+        .falling-item {
+            position: absolute;
+            font-size: 2.2rem;
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+            z-index: 10;
+        }
+
+        /* --- MENSAJES FLOTANTES (MINI-SORPRESAS) --- */
+        #toast-message {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(123, 31, 162, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            width: 80%;
+            max-width: 350px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid #d1b3ff;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 30;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .show-toast {
+            opacity: 1 !important;
+            transform: translate(-50%, -50%) scale(1) !important;
+        }
+
+        /* --- PANTALLA DE VICTORIA (LA CARTA) --- */
+        #victory-screen {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .glass-card {
+            background: rgba(25, 25, 30, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 24px;
             padding: 35px 30px;
@@ -63,76 +151,8 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* --- PANTALLA INICIAL --- */
-        #pantalla-inicio {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-
-        .ramo-header {
-            font-size: 2.6rem;
-            margin-bottom: 10px;
-            animation: pulse-ramo 2s infinite ease-in-out;
-            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
-        }
-
-        @keyframes pulse-ramo {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .titulo-fecha {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            color: #e0c8ff;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 10px rgba(224, 200, 255, 0.4);
-        }
-
-        .texto-misterio {
-            font-weight: 300;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: 30px;
-            color: #eaeaea;
-        }
-
-        .btn-abrir {
-            background: linear-gradient(135deg, #7b1fa2, #4a148c);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(74, 20, 140, 0.6);
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-        }
-
-        .btn-abrir:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(123, 31, 162, 0.8);
-            background: linear-gradient(135deg, #8e24aa, #512da8);
-        }
-
-        /* --- LA CARTA CON SCROLL INTERNO --- */
-        #pantalla-carta {
-            display: none;
-            opacity: 0;
-            flex-direction: column;
-            height: 100%;
-            transition: opacity 0.8s ease;
+            transform: scale(0.9);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .carta-scroll-area {
@@ -144,22 +164,24 @@
             scrollbar-color: rgba(209, 179, 255, 0.4) transparent;
         }
 
-        .carta-scroll-area::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .carta-scroll-area::-webkit-scrollbar-thumb {
-            background-color: rgba(209, 179, 255, 0.4);
-            border-radius: 10px;
-        }
+        .carta-scroll-area::-webkit-scrollbar { width: 6px; }
+        .carta-scroll-area::-webkit-scrollbar-thumb { background-color: rgba(209, 179, 255, 0.4); border-radius: 10px; }
 
         .saludo {
             font-family: 'Dancing Script', cursive;
             font-size: 3rem;
             color: #d1b3ff;
-            margin: 0 0 20px 0;
+            margin: 0 0 15px 0;
             text-align: center;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .intro-victoria {
+            text-align: center;
+            font-weight: bold;
+            color: #00e676;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
         }
 
         .cuerpo-carta {
@@ -170,17 +192,8 @@
             margin-bottom: 25px;
         }
 
-        .resaltado {
-            color: #00e676; 
-            font-weight: bold;
-            font-style: italic;
-            text-shadow: 0 0 5px rgba(0, 230, 118, 0.3);
-        }
-        
-        .texto-bold {
-            font-weight: 700;
-            color: #ffffff;
-        }
+        .resaltado { color: #00e676; font-weight: bold; font-style: italic; }
+        .texto-bold { font-weight: 700; color: #ffffff; }
 
         .firma {
             font-family: 'Montserrat', sans-serif;
@@ -194,15 +207,6 @@
             letter-spacing: 2px;
         }
 
-        /* --- BOTÓN DE REGRESAR --- */
-        .btn-regresar-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
         .btn-regresar {
             background: rgba(255, 255, 255, 0.05);
             color: #e0e0e0;
@@ -213,45 +217,38 @@
             font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 1.5px;
+            margin: 15px auto 0;
+            display: block;
             text-transform: uppercase;
         }
 
-        .btn-regresar:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-
         @media (max-width: 600px) {
-            .glass-card { padding: 25px 20px; width: 92%; max-height: 88vh; }
-            .saludo { font-size: 2.5rem; }
-            .cuerpo-carta { font-size: 1rem; }
-            .titulo-fecha { font-size: 1.9rem; }
-            .ramo-header { font-size: 2.2rem; }
+            .glass-card { padding: 25px 20px; width: 92%; }
+            .saludo { font-size: 2.6rem; }
+            .cuerpo-carta { font-size: 1.05rem; }
+            .score-item { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- CONTENEDOR DE LA LLUVIA DE FLORES EN EL FONDO -->
-    <div id="bg-particles"></div>
-
-    <div class="glass-card" id="main-card">
+    <div id="game-screen">
+        <div class="game-instructions">Atrapa 3 de cada uno para revelar la sorpresa 🧺</div>
         
-        <!-- FASE 1: INICIO -->
-        <div id="pantalla-inicio">
-            <div class="ramo-header">💐💜🌿</div>
-            <h1 class="titulo-fecha">9 de Noviembre</h1>
-            <p class="texto-misterio">Dicen que hoy se regalan flores moradas para demostrar orgullo, admiración y un cariño profundo. <br><br>Pero yo quería agregarle algo más... tu toque favorito. 🍫🌿</p>
-            <button class="btn-abrir" onclick="iniciarSorpresa()">Descubre tu sorpresa</button>
+        <div class="score-board" id="score-board">
+            <!-- Se llena con Javascript -->
         </div>
+        
+        <div id="toast-message"></div>
+        <div id="player">🧺</div>
+    </div>
 
-        <!-- FASE 2: LA CARTA -->
-        <div id="pantalla-carta">
+    <!-- PANTALLA DE VICTORIA -->
+    <div id="victory-screen">
+        <div class="glass-card" id="card-content">
             <div class="carta-scroll-area">
                 <h2 class="saludo">Mi querida Marely,</h2>
+                <div class="intro-victoria">✨ Has reunido todos los detalles, pero el más importante es este... ✨</div>
                 <div class="cuerpo-carta">
                     Hoy es un día para regalar flores moradas, pero no podía darte algo común. Te mereces algo único, como esa mezcla perfecta de <span class="texto-bold">chocolate y menta</span> que tanto te gusta.<br><br>
                     Quiero ser muy sincero contigo. <span class="texto-bold">Estoy dispuesto a esperarte</span>, incluso si eso significa aguardar días por un solo mensaje tuyo. Me interesa conocer a fondo tu forma de amar y de querer. Sé que a veces puedes ser un poco fría al escribir, pero eso no me asusta; al contrario, <span class="resaltado">estoy dispuesto a hacer todo lo necesario para ganarme tu cariño</span> y demostrarte tanta calidez que ese hielo se derrita a su propio ritmo.<br><br>
@@ -259,71 +256,185 @@
                 </div>
                 <span class="firma">Con cariño, Ángel</span>
             </div>
-            <div class="btn-regresar-container">
-                <button class="btn-regresar" onclick="regresarInicio()">← Volver al inicio</button>
-            </div>
+            <button class="btn-regresar" onclick="reiniciarJuego()">Jugar de nuevo</button>
         </div>
-
     </div>
 
     <script>
-        // Sistema de lluvia constante de flores moradas, corazones y chocolate en el fondo
-        function createFallingFlowers() {
-            const container = document.getElementById('bg-particles');
-            const items = ['💜', '🪻', '🌸', '🌿', '🍫', '✨'];
-            const count = 30; // Cantidad de elementos cayendo al mismo tiempo
+        const player = document.getElementById('player');
+        const gameScreen = document.getElementById('game-screen');
+        const scoreBoard = document.getElementById('score-board');
+        const toastMessage = document.getElementById('toast-message');
+        const victoryScreen = document.getElementById('victory-screen');
+        const cardContent = document.getElementById('card-content');
+        
+        let isGameRunning = true;
+        let itemsOnScreen = [];
+        let spawnInterval;
+        let gameLoop;
+        let toastTimeout;
 
-            for (let i = 0; i < count; i++) {
-                let p = document.createElement('div');
-                p.className = 'falling-flower';
-                p.innerText = items[Math.floor(Math.random() * items.length)];
-                
-                p.style.left = Math.random() * 100 + 'vw';
-                p.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
-                p.style.animationDuration = (Math.random() * 6 + 4) + 's'; // Velocidad de caída
-                p.style.animationDelay = (Math.random() * 5) + 's'; // Retraso inicial aleatorio
-                
-                container.appendChild(p);
+        // Configuración de los elementos y sus mensajes románticos
+        const gameItems = [
+            { emoji: '💜', name: 'corazon', count: 0, goal: 3, msg: "💜 Cada corazón que atrapo me recuerda a ti..." },
+            { emoji: '🪻', name: 'flor1', count: 0, goal: 3, msg: "🪻 Tu lado tierno me fascina..." },
+            { emoji: '🌸', name: 'flor2', count: 0, goal: 3, msg: "🌸 Quiero descubrir todas tus facetas..." },
+            { emoji: '🌿', name: 'menta', count: 0, goal: 3, msg: "🌿 Eres mi toque refrescante de cada día..." },
+            { emoji: '🍫', name: 'choco', count: 0, goal: 3, msg: "🍫 Mi debilidad más dulce, igual que tú..." }
+        ];
+
+        function initScoreBoard() {
+            scoreBoard.innerHTML = '';
+            gameItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'score-item';
+                div.id = `score-${index}`;
+                div.innerHTML = `${item.emoji} <span id="text-${index}">0/3</span>`;
+                scoreBoard.appendChild(div);
+            });
+        }
+
+        // --- MOVIMIENTO ---
+        function movePlayer(x) {
+            if (!isGameRunning) return;
+            const screenWidth = window.innerWidth;
+            const playerWidth = player.offsetWidth;
+            let newX = x - (playerWidth / 2);
+            newX = Math.max(0, Math.min(newX, screenWidth - playerWidth));
+            player.style.left = newX + 'px';
+        }
+
+        gameScreen.addEventListener('touchmove', (e) => movePlayer(e.touches[0].clientX));
+        gameScreen.addEventListener('mousemove', (e) => movePlayer(e.clientX));
+
+        // --- CREAR OBJETOS ---
+        function spawnItem() {
+            if (!isGameRunning) return;
+            
+            const randomItem = gameItems[Math.floor(Math.random() * gameItems.length)];
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            item.innerText = randomItem.emoji;
+            item.dataset.index = gameItems.indexOf(randomItem);
+            
+            item.style.top = '-50px';
+            item.style.left = Math.random() * (window.innerWidth - 40) + 'px';
+            
+            gameScreen.appendChild(item);
+            itemsOnScreen.push(item);
+        }
+
+        function showToast(text) {
+            clearTimeout(toastTimeout);
+            toastMessage.innerText = text;
+            toastMessage.classList.add('show-toast');
+            toastTimeout = setTimeout(() => {
+                toastMessage.classList.remove('show-toast');
+            }, 3000); // El mensaje dura 3 segundos
+        }
+
+        // --- MOTOR DEL JUEGO ---
+        function updateGame() {
+            if (!isGameRunning) return;
+
+            const playerRect = player.getBoundingClientRect();
+
+            itemsOnScreen.forEach((item, i) => {
+                let currentTop = parseFloat(item.style.top);
+                item.style.top = (currentTop + 4) + 'px'; // Velocidad de caída
+
+                const itemRect = item.getBoundingClientRect();
+
+                // Detección de Colisión
+                if (
+                    itemRect.bottom >= playerRect.top + 20 &&
+                    itemRect.top <= playerRect.bottom &&
+                    itemRect.right >= playerRect.left &&
+                    itemRect.left <= playerRect.right
+                ) {
+                    const itemIndex = item.dataset.index;
+                    const gameObj = gameItems[itemIndex];
+                    
+                    item.remove();
+                    itemsOnScreen.splice(i, 1);
+
+                    // Si aún no completa los 3 de ese objeto
+                    if (gameObj.count < gameObj.goal) {
+                        gameObj.count++;
+                        const textSpan = document.getElementById(`text-${itemIndex}`);
+                        textSpan.innerText = `${gameObj.count}/3`;
+
+                        // Si acaba de llegar a 3, mostrar mensaje especial
+                        if (gameObj.count === gameObj.goal) {
+                            textSpan.classList.add('completed');
+                            showToast(gameObj.msg);
+                            checkWin();
+                        }
+                    }
+
+                    player.style.transform = 'translateX(-50%) scale(1.2)';
+                    setTimeout(() => player.style.transform = 'translateX(-50%) scale(1)', 100);
+                } 
+                else if (currentTop > window.innerHeight) {
+                    item.remove();
+                    itemsOnScreen.splice(i, 1);
+                }
+            });
+
+            gameLoop = requestAnimationFrame(updateGame);
+        }
+
+        function checkWin() {
+            const allCompleted = gameItems.every(item => item.count >= item.goal);
+            if (allCompleted) {
+                setTimeout(ganarJuego, 2000); // Esperar 2 segundos para que lea el último mensaje antes de abrir la carta
             }
         }
-        createFallingFlowers();
 
-        function iniciarSorpresa() {
-            const inicio = document.getElementById('pantalla-inicio');
-            const carta = document.getElementById('pantalla-carta');
-            const card = document.getElementById('main-card');
+        function ganarJuego() {
+            isGameRunning = false;
+            cancelAnimationFrame(gameLoop);
+            clearInterval(spawnInterval);
+            toastMessage.classList.remove('show-toast');
 
-            inicio.style.opacity = '0';
+            itemsOnScreen.forEach(item => item.remove());
+            itemsOnScreen = [];
+
+            victoryScreen.style.display = 'flex';
+            setTimeout(() => {
+                victoryScreen.style.opacity = '1';
+                cardContent.style.transform = 'scale(1)';
+            }, 50);
+        }
+
+        function reiniciarJuego() {
+            victoryScreen.style.opacity = '0';
+            cardContent.style.transform = 'scale(0.9)';
             
             setTimeout(() => {
-                inicio.style.display = 'none';
-                card.style.transform = 'scale(0.96)';
+                victoryScreen.style.display = 'none';
                 
-                setTimeout(() => {
-                    card.style.transform = 'scale(1)';
-                    carta.style.display = 'flex';
-                    setTimeout(() => {
-                        carta.style.opacity = '1';
-                    }, 50);
-                }, 300);
-
-            }, 400);
+                // Reiniciar contadores
+                gameItems.forEach((item, index) => {
+                    item.count = 0;
+                    const textSpan = document.getElementById(`text-${index}`);
+                    textSpan.innerText = `0/3`;
+                    textSpan.classList.remove('completed');
+                });
+                
+                isGameRunning = true;
+                iniciarJuego();
+            }, 800);
         }
 
-        function regresarInicio() {
-            const inicio = document.getElementById('pantalla-inicio');
-            const carta = document.getElementById('pantalla-carta');
-
-            carta.style.opacity = '0';
-            
-            setTimeout(() => {
-                carta.style.display = 'none';
-                inicio.style.display = 'flex';
-                setTimeout(() => {
-                    inicio.style.opacity = '1';
-                }, 50);
-            }, 500);
+        function iniciarJuego() {
+            initScoreBoard();
+            spawnInterval = setInterval(spawnItem, 650); // Genera objeto cada 0.65s
+            updateGame();
         }
+
+        // Arrancar
+        iniciarJuego();
     </script>
 </body>
 </html> 
